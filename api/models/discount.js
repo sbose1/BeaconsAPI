@@ -18,6 +18,6 @@ const discountS = mongoose.Schema({
             }
 
 
-});
+},{collection: 'discount'});
 
 module.exports = mongoose.model('discount', discountS);
