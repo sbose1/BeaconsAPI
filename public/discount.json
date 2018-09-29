@@ -1,4 +1,4 @@
-{ "results": [
+ [
 	{
         "discount": 10,
         "name": "Pineapple",
@@ -118,4 +118,4 @@
         "price": 4.99,
         "region": "lifestyle"
     }
-] }
+] 

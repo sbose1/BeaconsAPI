@@ -28,9 +28,22 @@ module.exports.getDiscounts = function(req, res){
   const id=req.body.region;
 
   if (!id) {
-    res.status(401).json({
-      "message" : "Error: no valid device found"
-    });
+   Discount
+      .find({})
+      .exec(function(err, product) {
+		  if(err){
+		  res.status(401).json({
+				"message" : "Error: no valid device found"
+			});
+			return;
+			}
+        res.status(200).json(
+        //result
+        {message:"Request successful",
+        product: product,
+        status:200}
+        )
+      });
   } else {
     Discount
       .find({region: req.body.region})
