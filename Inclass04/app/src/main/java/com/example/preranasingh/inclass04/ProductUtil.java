@@ -24,8 +24,8 @@ class ProductUtil {
                 Product product = new Product();
                 product.setId(JSONProductObject.getString("_id"));
                 product.setRegion(JSONProductObject.getString("region"));
-                product.setImgPath(JSONProductObject.getString("path"));
-                product.setProductName(JSONProductObject.getString("pname"));
+                product.setphoto(JSONProductObject.getString("photo"));
+                product.setname(JSONProductObject.getString("name"));
                 product.setDiscount(JSONProductObject.getDouble("discount"));
                 product.setPrice(JSONProductObject.getDouble("price"));
 

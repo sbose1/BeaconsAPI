@@ -1,14 +1,15 @@
 package com.example.preranasingh.inclass04;
 
 public class Product {
-    String id,productName, region,imgPath;
+    String id,name, region,photo;
     double discount,price;
 
-    public Product(String id,String productName, String region, String imgPath, double discount, double price) {
+
+    public Product(String id,String productName, String region, String photo, double discount, double price) {
         this.id=id;
-        this.productName = productName;
+        this.name = productName;
         this.region = region;
-        this.imgPath = imgPath;
+        this.photo = photo;
         this.discount = discount;
         this.price = price;
     }
@@ -25,12 +26,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getname() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setname(String name) {
+        this.name = name;
     }
 
     public String getRegion() {
@@ -41,12 +42,14 @@ public class Product {
         this.region = region;
     }
 
-    public String getImgPath() {
-        return imgPath;
+    public String getphoto() {
+        return photo;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+    public void setphoto(String photo) {
+        if (!photo.isEmpty()) {
+            this.photo = MainActivity.remoteIP+"/images/"+ photo;
+        }
     }
 
     public double getDiscount() {

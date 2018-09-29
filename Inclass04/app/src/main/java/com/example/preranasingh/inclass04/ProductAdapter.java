@@ -34,11 +34,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(ProductViewHolder holder, int position) {
        Product product=mData.get(position);
 
-       holder.txtProductName.setText(product.productName);
+       holder.txtProductName.setText(product.name);
        holder.txtDiscount.setText(String.valueOf(product.discount));
        holder.txtPrice.setText(String.valueOf(product.price));
        holder.txtRegion.setText(String.valueOf(product.region));
-       Picasso.with(context).load(product.imgPath).into(holder.imgProduct);
+       Picasso.with(context).load(product.photo).into(holder.imgProduct);
     }
 
 
