@@ -1,4 +1,5 @@
 package com.example.preranasingh.inclass04;
+import android.support.v7.app.ActionBar;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
         setContentView(R.layout.activity_main);
         apiURL="http://18.223.110.166:5000/get/getDiscounts";
 
-     //   getProductList("produce");
         beaconManager = new BeaconManager(this);
         region = new BeaconRegion("region",
                 UUID.fromString(beaconUUID), null, null);

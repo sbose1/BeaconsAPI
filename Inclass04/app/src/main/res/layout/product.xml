@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:background="@drawable/background_border">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_border"
+    android:padding="6dp">
 
     <ImageView
         android:id="@+id/imgView"
         android:layout_width="105dp"
         android:layout_height="83dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="18dp"
         app:srcCompat="@drawable/default_image" />
 
     <TextView
         android:id="@+id/txtProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/imgView"
-        android:layout_marginStart="149dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
         android:text="Product Name"
         android:textStyle="bold" />
 
@@ -39,9 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="52dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="33dp"
         android:inputType="numberDecimal"
         android:text="10.5" />
 
