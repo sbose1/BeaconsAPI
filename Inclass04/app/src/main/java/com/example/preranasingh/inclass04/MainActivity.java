@@ -14,6 +14,7 @@ import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
 import com.estimote.coresdk.recognition.packets.Beacon;
 import com.estimote.coresdk.service.BeaconManager;
+import com.estimote.mgmtsdk.repackaged.jtar.TarOutputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,8 +28,9 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
     private RecyclerView.LayoutManager mLayoutManager;
     private BeaconManager beaconManager;
     private BeaconRegion region;
-    private final int badRSSI  = -50;
-    private final int goodRSSI =-30;
+    private final int badRSSI  = 50;
+    private final int goodRSSI =70;
+    private Boolean initialized=false;
     private Beacon currentBeacon =null;
     private String beaconUUID="B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 
@@ -43,44 +45,87 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
 
      //   getProductList("produce");
         beaconManager = new BeaconManager(this);
-        region = new BeaconRegion("ranged region",
+        region = new BeaconRegion("region",
                 UUID.fromString(beaconUUID), null, null);
+        getProductList("");
         beaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion region, List<Beacon> list) {
                 if (!list.isEmpty()) {
-                    if (currentBeacon == null )
-                        currentBeacon = list.get(0) ;
-                    Beacon temp= list.get( list.indexOf(currentBeacon)) ;
+
+                    Beacon temp=null;
+                    Boolean noneOfThese=true;
+                    if(initialized)
+                        temp = list.indexOf(currentBeacon)>=0? list.get(list.indexOf(currentBeacon)):null ;
                     for (Beacon item:list
                             ) {
-                        if((temp ==null ||temp.getRssi() <badRSSI))
-                        {
-                            if(item.getRssi()>goodRSSI ) {
-                                currentBeacon = item;
-                                switch (currentBeacon.getMajor()) {
-                                    case 55125:
-                                        getProductList("grocery");
+                        Log.d("beacon", "onBeaconsDiscovered: "+item.toString());
+                        Log.d("test", "onBeaconsDiscovered: "+ item.getMinor());
+
+                        Log.d("test", "beacons rssi: "+ item.getRssi());
+                        Log.d("test", "beacons measuredpower: "+ item.getMeasuredPower());
+                        switch (item.getMinor()) {
+                                    case 738:
+                                        noneOfThese=false;
+                                        if (!initialized)
+                                        {currentBeacon = item;
+                                        temp=item;
+                                        initialized=true;
+                                        }
+
+                                        if((temp==null || temp.getRssi()<badRSSI)&&item.getRssi()*(-1)>goodRSSI) {
+                                            currentBeacon = item;
+                                            // Woodward 333F
+                                            Toast.makeText(MainActivity.this, "near grocery", Toast.LENGTH_SHORT).show();
+                                            getProductList("grocery");
+                                        }
                                         break;
-                                    case 59599:
-                                        getProductList("lifestyle");
+                                    case 33091:
+                                        noneOfThese=false;
+                                        if (!initialized)  {currentBeacon = item;
+                                            temp=item;
+                                            initialized=true;
+                                        }
+                                        if((temp==null || temp.getRssi()<badRSSI)&&item.getRssi()*(-1)>goodRSSI) {
+                                            currentBeacon = item;
+                                            // makerspace lab
+                                            Toast.makeText(MainActivity.this, "near lifestyle", Toast.LENGTH_SHORT).show();
+
+                                            getProductList("lifestyle");
+                                        }
                                         break;
-                                    case 1564:
-                                        getProductList("produce");
+                                    case 34409:
+                                        noneOfThese=false;
+                                        if (!initialized)  {currentBeacon = item;
+                                            initialized=true;
+                                            temp=item;
+                                        }
+                                        if((temp==null || temp.getRssi()<badRSSI)&&item.getRssi()*(-1)>goodRSSI) {
+                                            currentBeacon = item;
+                                            //elevator
+                                            Toast.makeText(MainActivity.this, "near produce", Toast.LENGTH_SHORT).show();
+
+                                            getProductList("produce");
+                                        }
                                         break;
-                                    default:
-                                        getProductList("");
-                                }
-                            }else {
-                                //no beacon in range case
-                                getProductList("");
+//                                    default:
+//                                        if(temp==null || temp.getRssi()<badRSSI)
+//                                        getProductList("");
+//                                        break;
+
                             }
 
-                        }
-
+                    }
+                    if(  noneOfThese&&( temp==null || temp.getRssi()<badRSSI)) {
+                        Toast.makeText(MainActivity.this, "None of the categories are nearby.", Toast.LENGTH_SHORT).show();
+                        getProductList("");
                     }
 
 
+
+                }else  {
+                    Toast.makeText(MainActivity.this, "couldnt find any beacon", Toast.LENGTH_SHORT).show();
+                    getProductList("");
 
                 }
             }

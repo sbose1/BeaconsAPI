@@ -1,4 +1,4 @@
-USER AUTH SERVICE Group3 ABSTRACT •	This project provides sign in, login, and logout features. •	A mechanism to allow the user to access protected resources after a successful login. •	An error reporting mechanism.
+﻿USER AUTH SERVICE Group3 ABSTRACT •	This project provides sign in, login, and logout features. •	A mechanism to allow the user to access protected resources after a successful login. •	An error reporting mechanism.
 
 ### Git link:
 https://github.com/sbose1/BeaconsAPI.git
@@ -12,6 +12,6 @@ UI/Frontend: Mobile App (Android) Middle tier: Node and Express Backend Database
 ### Platform Scenarios:
 User authentication mobile application using a REST API built with Node, Express and MongoDB. Implementation scenarios handled:
 
-
-
+### Oscillation Algorithm
+We have used the concept of thresholding. there are two variables badRSSI which is tuned to 60 and a good rssi which is tuned to 75. As the beacon list is scanned the algorithm check if the discovered beacons are among the desired beacons and if so what is there RSSI value which then checks if this RSS is better than good RSSI or lessesr than bad RSSI. If the RSSI of current beacon drops below bad RSSI and one of the scanned beacon has RSSI better than good RSSI then it is considered to be the current RSSI. Thus till if the beacon is selected and RSSI is between 60-75 it stays connected and if none of the desired beacons are available in ranging list then the default value for the list is shown.
 
