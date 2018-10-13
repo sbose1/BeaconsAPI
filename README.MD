@@ -1,4 +1,8 @@
-﻿USER AUTH SERVICE Group3 ABSTRACT •	This project provides sign in, login, and logout features. •	A mechanism to allow the user to access protected resources after a successful login. •	An error reporting mechanism.
+﻿BEACONS API Group3 
+ 
+### ABSTRACT
+ •	This project provides fetching the list of products based on the region Id from the Beacon in the mobile app
+ •	An error reporting mechanism.
 
 ### Git link:
 https://github.com/sbose1/BeaconsAPI.git
