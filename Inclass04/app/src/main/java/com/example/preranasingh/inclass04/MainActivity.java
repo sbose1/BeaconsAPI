@@ -19,6 +19,7 @@ import com.estimote.mgmtsdk.repackaged.jtar.TarOutputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
     private Boolean initialized=false;
     private Beacon currentBeacon =null;
     private String beaconUUID="B9407F30-F5F8-466E-AFF9-25556B57FE6D";
-
+private static int counter=0;
     String apiURL;
     public static String remoteIP="http://18.223.110.166:5000";
     ArrayList<Product> data=new ArrayList<>();
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
         region = new BeaconRegion("region",
                 UUID.fromString(beaconUUID), null, null);
         getProductList("");
-        beaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
+      /*  beaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion region, List<Beacon> list) {
                 if (!list.isEmpty()) {
@@ -129,8 +130,32 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
 
                 }
             }
-        });
+        });*/
+        beaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
+            @Override
+            public void onBeaconsDiscovered(BeaconRegion region, List<Beacon> list) {
+                if (!list.isEmpty() && counter ==20 ) {
+                    Log.d("test", "counter " +counter);
 
+                    for (Beacon item:list
+                         ) {
+                        Beacon nearestBeacon = item;
+                        List<String> places = placesNearBeacon(nearestBeacon);
+                        // TODO: update the UI here
+                        if(places.size()>0) {
+                            getProductList(places.get(0));
+                            counter=0;
+                            break;
+                        }
+                        Log.d("test", "Nearest places: " + places);
+                    }
+
+
+                }else{
+                    counter ++;
+                }
+            }
+        });
 
       //  new ProductAsnycTask(this).execute(apiURL);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -143,6 +168,31 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
 
     }
 
+    private static final Map<String, List<String>> PLACES_BY_BEACONS;
+
+    static {
+        Map<String, List<String>> placesByBeacons = new HashMap<>();
+        placesByBeacons.put("55125:738", new ArrayList<String>() {{
+            add("grocery");
+
+        }});
+        placesByBeacons.put("59599:33091", new ArrayList<String>() {{
+            add("lifestyle");
+        }});
+        placesByBeacons.put("1564:34409", new ArrayList<String>() {{
+            add("produce");
+
+        }});
+        PLACES_BY_BEACONS = Collections.unmodifiableMap(placesByBeacons);
+    }
+
+    private List<String> placesNearBeacon(Beacon beacon) {
+        String beaconKey = String.format("%d:%d", beacon.getMajor(), beacon.getMinor());
+        if (PLACES_BY_BEACONS.containsKey(beaconKey)) {
+            return PLACES_BY_BEACONS.get(beaconKey);
+        }
+        return Collections.emptyList();
+    }
     private void getProductList(String filter){
         if(isConnectedOnline()){
             RequestParams params=new RequestParams("POST",apiURL);
