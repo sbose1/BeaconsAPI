@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
     private String beaconUUID="B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 private static int counter=0;
     String apiURL;
-    public static String remoteIP="http://18.223.110.166:5000";
+    public static String remoteIP="http://18.223.110.166:3000";
     ArrayList<Product> data=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +134,9 @@ private static int counter=0;
         beaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion region, List<Beacon> list) {
-                if (!list.isEmpty() && counter ==20 ) {
-                    Log.d("test", "counter " +counter);
+                Log.d("test", "counter " +counter);
+
+                if (!list.isEmpty()  ) {
 
                     for (Beacon item:list
                          ) {
@@ -144,8 +145,12 @@ private static int counter=0;
                         // TODO: update the UI here
                         if(places.size()>0) {
                             getProductList(places.get(0));
+                            Toast.makeText(MainActivity.this, places.get(0), Toast.LENGTH_SHORT).show();
                             counter=0;
                             break;
+                        }else{
+                            getProductList("");
+                            Toast.makeText(MainActivity.this, "nothing nearby showing all", Toast.LENGTH_SHORT).show();
                         }
                         Log.d("test", "Nearest places: " + places);
                     }
