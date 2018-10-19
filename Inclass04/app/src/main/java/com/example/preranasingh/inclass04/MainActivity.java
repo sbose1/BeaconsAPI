@@ -43,7 +43,7 @@ private static int counter=0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        apiURL="http://18.223.110.166:5000/get/getDiscounts";
+        apiURL="http://18.223.110.166:3000/get/getDiscounts";
 
         beaconManager = new BeaconManager(this);
         region = new BeaconRegion("region",
