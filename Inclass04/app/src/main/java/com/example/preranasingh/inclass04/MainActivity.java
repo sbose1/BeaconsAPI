@@ -1,6 +1,4 @@
 package com.example.preranasingh.inclass04;
-import android.support.v7.app.ActionBar;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,7 +13,6 @@ import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
 import com.estimote.coresdk.recognition.packets.Beacon;
 import com.estimote.coresdk.service.BeaconManager;
-import com.estimote.mgmtsdk.repackaged.jtar.TarOutputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements ProductAsyncTask.
     private String beaconUUID="B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 private static int counter=0;
     String apiURL;
-    public static String remoteIP="http://18.223.110.166:3000";
+    public static String remoteIP="http://52.202.147.130:5000";
     ArrayList<Product> data=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
